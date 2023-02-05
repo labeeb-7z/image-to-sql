@@ -1,6 +1,3 @@
-
-
-# Import required packages
 import cv2
 import pytesseract
 import numpy as np
@@ -8,13 +5,6 @@ from typing import Any, List, Tuple, Dict
 import sys
 
 
-class TableNameException(Exception):
-    def __init__(self):
-        self.msg = """\nYour table name isn't in one word.
-                    Consider using underscores (_) instead of spaces
-                    and hyphens(-)\n
-                    """
-        super().__init__(self.msg)
 
 
 def recognize(img_path: str, tesseract_path: str) -> str:  # Taken from GFG
@@ -171,8 +161,6 @@ def typeEnforce(cmd: List) -> List:
     # if len(checks) >= 1:
     #     return checks
 
-    # for i in checks:
-    #     print(i)
 
     # print(f"Columns with {most_common_column_no[0]} columns:\n")
     # for i in correct_length_columns:
@@ -219,8 +207,8 @@ def driver(image_path: str, tesseract_path: str) -> None:
 
     table_name: str = input("Enter table name:")
 
-    if len(table_name.strip().split(" ")) != 1 or table_name == "":
-        raise TableNameException
+    # if len(table_name.strip().split(" ")) != 1 or table_name == "":
+    #     raise TableNameException
     
     commands: List = to_insertion(table_name, lines[1:])
 
@@ -231,19 +219,19 @@ def driver(image_path: str, tesseract_path: str) -> None:
 
     # for i in chk:
     #     print(i)
-    if "--typecheck" in sys.argv:
-        print("\nChecks:")
-        chk: List = typeEnforce(lines[1:])
+    # if "--typecheck" in sys.argv:
+    #     print("\nChecks:")
+    #     chk: List = typeEnforce(lines[1:])
 
-        if len(chk) == 0:
-            print("No errors found! You can copy-paste in peace :D\n")
+    #     if len(chk) == 0:
+    #         print("No errors found! You can copy-paste in peace :D\n")
 
-    if "-o" in sys.argv and "-o" != sys.argv[-1]:
-        index: int = sys.argv.index("-o")
+    # if "-o" in sys.argv and "-o" != sys.argv[-1]:
+    #     index: int = sys.argv.index("-o")
 
-        path: str = sys.argv[index + 1]
+    #     path: str = sys.argv[index + 1]
 
-        write(table_name, commands, path)
+    #     write(table_name, commands, path)
 
 if __name__ == "__main__":
     INPUT_PATH = input("Enter image path: ")
@@ -254,3 +242,12 @@ if __name__ == "__main__":
         driver(INPUT_PATH, TESSERACT_PATH)
     except Exception as e:
         print(f"Exception encountered.{e}")
+
+        
+# class TableNameException(Exception):
+#     def __init__(self):
+#         self.msg = """\nYour table name isn't in one word.
+#                     Consider using underscores (_) instead of spaces
+#                     and hyphens(-)\n
+#                     """
+#         super().__init__(self.msg)
